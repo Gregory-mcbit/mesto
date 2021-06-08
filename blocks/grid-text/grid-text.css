@@ -1,0 +1,7 @@
+.grid-text {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 21px;
+    margin-right: 21px;
+    margin-top: 25px;
+}

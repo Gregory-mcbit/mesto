@@ -1,0 +1,16 @@
+.grid-like {
+    background-image: url(../../images/like.svg);
+    width: 22px;
+    height: 19px;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    align-self: center;
+}
+
+.grid-like:hover {
+    opacity: 0.5;
+}
