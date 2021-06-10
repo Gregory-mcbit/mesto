@@ -1,5 +1,5 @@
-.main-grid-text {
-    font-family: Inter;
+.grid-places__title {
+    font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
     font-style: normal;
     text-overflow: ellipsis;
     white-space: nowrap;

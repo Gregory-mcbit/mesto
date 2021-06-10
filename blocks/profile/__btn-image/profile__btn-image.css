@@ -9,6 +9,7 @@
     background-repeat: no-repeat;
     margin-left: 18px;
     border: none;
+    background-size: 18px 18px;
 }
 .profile__btn-image:hover {
     opacity: 0.6;

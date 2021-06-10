@@ -8,4 +8,14 @@
         margin: 0;
         display: flex;
     }
+
+    .profile:last-child {
+        justify-self: flex-end;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .profile {
+        margin: 0;
+    }
 }
