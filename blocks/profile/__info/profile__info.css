@@ -22,5 +22,6 @@
 @media screen and (min-width: 1024px) {
     .profile__info {
         margin-top: 30px;
+        margin-left: 0;
     }
 }

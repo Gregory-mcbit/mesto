@@ -5,12 +5,14 @@
 
 @media screen and (min-width: 768px){
     .profile {
-        margin: 0;
+        margin: 0 auto;
         display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .profile:last-child {
-        justify-self: flex-end;
+        justify-content: flex-end;
     }
 }
 

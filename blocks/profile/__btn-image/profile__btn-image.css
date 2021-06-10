@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     margin-left: 18px;
     border: none;
-    background-size: 18px 18px;
+    background-size: 24px 24px;
 }
 .profile__btn-image:hover {
     opacity: 0.6;
@@ -18,7 +18,8 @@
 @media screen and (max-width: 576px) {
     .profile__btn-image {
         margin-left: 10px;
-        height: 18px;
         width: 18px;
+        height: 18px;
+        background-size: 18px 18px;
     }
 }
