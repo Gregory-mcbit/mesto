@@ -150,7 +150,7 @@ formSaveBtn.addEventListener('click', formSaving)
 
 //photo popup
 const photoPopup = document.querySelector('#scale')
-const popupBtnClose = photoPopup.querySelector('#photo-close')
+const popupBtnClose = photoPopup.querySelector('#close')
 popupBtnClose.addEventListener('click', photoPopupClose)
 
 function photoPopupClose() {
