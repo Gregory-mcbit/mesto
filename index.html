@@ -28,50 +28,7 @@
           </section>
 
             <section class="photos">
-              <ul class="grid-places">
-                <li class="grid-places__item">
-                  <img src="images/photo1.jpg" class="grid-places__image" alt="Карачаевск">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Карачаевск</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-                <li class="grid-places__item">
-                  <img src="images/photo2.jpg" class="grid-places__image" alt="Эльбрус">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Гора Эльбрус</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-                <li class="grid-places__item">
-                  <img src="images/photo3.jpg" class="grid-places__image" alt="Домбай">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Домбай</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-                <li class="grid-places__item">
-                  <img src="images/photo4.jpg" class="grid-places__image" alt="Гора Эльбрус">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Гора Эльбрус</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-                <li class="grid-places__item">
-                  <img src="images/photo5.jpg" class="grid-places__image" alt="Домбай">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Домбай</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-                <li class="grid-places__item">
-                  <img src="images/photo6.jpg" class="grid-places__image" alt="Карачаево-Черкесия">
-                  <div class="grid-places__text">
-                    <p class="grid-places__title">Карачаево-Черкесия</p>
-                    <button type="button" class="grid-places__like"></button>
-                  </div>
-                </li>
-              </ul>
+              <ul class="grid-places"></ul>
             </section>
         </main>
 
@@ -91,6 +48,36 @@
         <button type="button" class="popup__button-close"></button>
       </div>
     </div>
+
+    <div class="popup" id="photo">
+      <div class="popup__container">
+        <h2 class="popup__title">Добавить место</h2>
+        <form class="popup__form" name="edit-Profile" novalidate>
+          <input minlength="2" maxlength="40" type="text" placeholder="Название" class="popup__input" id="title" required>
+          <input minlength="2" maxlength="200" type="text" placeholder="Ссылка на картинку" class="popup__input" id="link" required>
+          <input type="submit" class="popup__button-save" value="Создать" name="submit" id="photo-save">
+        </form>
+        <button type="button" class="popup__button-close" id="photo-close"></button>
+      </div>
+    </div>
+
+    <div class="popup" id="scale">
+      <div class="popup__container-scale">
+        <button type="button" class="popup__button-close" id="photo-close"></button>
+        <img class="popup__photo">
+      </div>
+    </div>
+
+    <template id="grid-template">
+      <li class="grid-places__item">
+        <img src="images/Trash.svg" alt="Иконка удаления" class="grid-places__delete-icon">
+        <img class="grid-places__image">
+        <div class="grid-places__text">
+          <p class="grid-places__title"></p>
+          <button type="button" class="grid-places__like"></button>
+        </div>
+      </li>
+    </template>
 
     <script src="scripts/script.js"></script>
 </body>
