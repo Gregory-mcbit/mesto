@@ -24,142 +24,115 @@ const initialCards = [
       name: 'Байкал',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
-  ]; 
+  ];
 
 const photoZoneTemplate = document.querySelector('#grid-template').content
 const photos = document.querySelector('.grid-places')
+const photoPopup = document.querySelector('#scale')
+const addPlacePopup = document.querySelector('#photo')
+const profilePopup = document.querySelector('#profile')
+const openProfileBtn = document.querySelector('.profile__btn-image')
+const openAddPhotoBtn = document.querySelector('.profile__add-btn')
 
-initialCards.forEach(function (item) {
-    const photoZone = photoZoneTemplate.querySelector('.grid-places__item').cloneNode(true);
+openProfileBtn.addEventListener('click', editProfile)
+openAddPhotoBtn.addEventListener('click', addPlace)
 
-    const placeName = item.name
-    const placeLink = item.link
-    const like = photoZone.querySelector('.grid-places__like')
-    like.addEventListener('click', function () {like.classList.toggle('grid-places__like_active')})
-
-    photoZone.querySelector('.grid-places__image').src = placeLink
-    photoZone.querySelector('.grid-places__image').alt = placeName
-    photoZone.querySelector('.grid-places__title').textContent = placeName
-
-    photoZone.querySelector('.grid-places__image').addEventListener('click', photoPopupOpen)
-
-    photos.append(photoZone)
+initialCards.forEach(item => {
+  const newCard = createCard(item.name, item.link)
+  photos.append(newCard)
 })
 
 // function to add new card
-function addCard(name, link) {
-    const photoZone = photoZoneTemplate.querySelector('.grid-places__item').cloneNode(true);
+function createCard(name, link) {
+  const photoZone = photoZoneTemplate.querySelector('.grid-places__item').cloneNode(true);
 
-    const like = photoZone.querySelector('.grid-places__like')
-    like.addEventListener('click', function () {like.classList.toggle('grid-places__like_active')})
-    const deleteBtn = photoZone.querySelector('.grid-places__delete-icon')
-    deleteBtn.addEventListener('click', function(evt) {
-      const parent = evt.target.parentElement
-      parent.remove()
-    })
+  const like = photoZone.querySelector('.grid-places__like')
+  like.addEventListener('click', function () {like.classList.toggle('grid-places__like_active')})
 
-    photoZone.querySelector('.grid-places__image').src = link
-    photoZone.querySelector('.grid-places__image').alt = name
-    photoZone.querySelector('.grid-places__title').textContent = name
-
-    photos.prepend(photoZone)
-}
-
-// open photo-popup
-function openPhotoPopup() {
-  const popup = document.querySelector('#photo')
-  popup.classList.add('popup_opened')
-
-  document.querySelector('#title').value = ''
-  document.querySelector('#link').value = ''
-}
-
-// close photo-popup
-function closePhotoPopup() {
-  const popup = document.querySelector('#photo')
-  popup.classList.remove('popup_opened')
-}
-
-// save photo
-function savePhoto(evt) {
-  evt.preventDefault()
-
-  const title = document.querySelector('#title').value
-  const link = document.querySelector('#link').value
-
-  addCard(title, link)
-  closePhotoPopup()
-}
-
-const addBtn = document.querySelector('.profile__add-btn')
-addBtn.addEventListener('click', openPhotoPopup)
-const closeBtn = document.querySelector('#photo-close')
-closeBtn.addEventListener('click', closePhotoPopup)
-const saveBtn = document.querySelector('#photo-save')
-saveBtn.addEventListener('click', savePhoto)
-
-// delete photo
-const deleteBtnList = document.querySelectorAll('.grid-places__delete-icon')
-deleteBtnList.forEach(function (btn) {
-  btn.addEventListener('click', function(evt) {
+  const deleteBtn = photoZone.querySelector('.grid-places__delete-icon')
+  deleteBtn.addEventListener('click', function(evt) {
     const parent = evt.target.parentElement
     parent.remove()
   })
-})
 
-// popup_functions
-function openPopup() {
-    popup.classList.add('popup_opened')
+  photoZone.querySelector('.grid-places__image').addEventListener('click', showPhoto)
 
-    // filling forms with current values
-    formName.value = currentFormName.textContent
-    formProfession.value = currentFormProfession.textContent
+  photoZone.querySelector('.grid-places__image').src = link
+  photoZone.querySelector('.grid-places__image').alt = name
+  photoZone.querySelector('.grid-places__title').textContent = name
+
+  return photoZone
 }
 
-function closePopup() {
-    popup.classList.remove('popup_opened')
+function showPhoto(evt) {
+  const photo = evt.target.src
+  const photoZone = photoPopup.querySelector('.popup__photo')
+  photoZone.src = photo
+
+  const closeBtn = document.querySelector('#close')
+  closeBtn.addEventListener('click', function() {
+    closePopup(photoPopup)
+  })
+
+  openPopup(photoPopup)
 }
 
-function formSaving(evt) {
+function editProfile() {
+  const formName = document.querySelector('#name')
+  const formProfession = document.querySelector('#profession')
+  const currentFormName = document.querySelector('.profile__name')
+  const currentFormProfession = document.querySelector('.profile__information')
+
+  formName.value = currentFormName.textContent
+  formProfession.value = currentFormProfession.textContent
+
+  const saveProfileBtn = document.querySelector('#saveProfile')
+  saveProfileBtn.addEventListener('click', function(evt) {
     evt.preventDefault()
 
     currentFormName.textContent = formName.value
     currentFormProfession.textContent = formProfession.value
 
-    closePopup()
+    closePopup(profilePopup)
+  })
+
+  const closeProfileBtn = document.querySelector('#profile-close')
+  closeProfileBtn.addEventListener('click', function() {
+    closePopup(profilePopup)
+  })
+
+  openPopup(profilePopup)
 }
 
-const popup = document.querySelector('.popup')
+function addPlace() {
+  openPopup(addPlacePopup)
 
-// open popup
-const popupOpenBtn = document.querySelector('.profile__btn-image')
-popupOpenBtn.addEventListener('click', openPopup)
+  const saveBtn = addPlacePopup.querySelector('#photo-save')
+  const closeBtn = addPlacePopup.querySelector('#photo-close')
 
-// close popup
-const popupCloseBtn = document.querySelector('.popup__button-close')
-popupCloseBtn.addEventListener('click', closePopup)
+  saveBtn.addEventListener('click', function(evt) {
+    evt.preventDefault()
 
-// form inputs
-const formName = document.querySelector('#name')
-const formProfession = document.querySelector('#profession')
-const currentFormName = document.querySelector('.profile__name')
-const currentFormProfession = document.querySelector('.profile__information')
+    const title = addPlacePopup.querySelector('#title').value
+    const link = addPlacePopup.querySelector('#link').value
 
-const formSaveBtn = document.querySelector('.popup__button-save')
-formSaveBtn.addEventListener('click', formSaving)
+    const card = createCard(title, link)
+    photos.append(card)
+    closePopup(addPlacePopup)
+    document.forms.addPlace.reset()
+  })
 
-//photo popup
-const photoPopup = document.querySelector('#scale')
-const popupBtnClose = photoPopup.querySelector('#close')
-popupBtnClose.addEventListener('click', photoPopupClose)
+  closeBtn.addEventListener('click', function() {
+    closePopup(addPlacePopup)
 
-function photoPopupClose() {
-  photoPopup.classList.remove('popup_opened')
+    document.forms.addPlace.reset()
+  })
 }
 
-function photoPopupOpen(evt) {
-  photoPopup.classList.add('popup_opened')
-  const photo = evt.target.src
-  const photoZone = photoPopup.querySelector('.popup__photo')
-  photoZone.src = photo
+function openPopup(popup) {
+  popup.classList.add('popup_opened')
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened')
 }
