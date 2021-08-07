@@ -1,0 +1,10 @@
+.grid-places__delete-icon {
+    position: absolute;
+    margin-left: 249px;
+    margin-top: 18px;
+  }
+  
+  .grid-places__delete-icon:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }

@@ -1,0 +1,25 @@
+.profile__btn-image {
+    width: 24px;
+    height: 24px;
+    background-image: url(../../../images/Edit\ Button.svg);
+    background-color: #000;
+    outline: none;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 18px;
+    border: none;
+    background-size: 24px 24px;
+}
+.profile__btn-image:hover {
+    opacity: 0.6;
+  }
+
+@media screen and (max-width: 576px) {
+    .profile__btn-image {
+        margin-left: 10px;
+        width: 18px;
+        height: 18px;
+        background-size: 18px 18px;
+    }
+}
