@@ -72,15 +72,15 @@ photos.append(newCard)
 
 // function to add new card
 function createCard(name, link) {
-const photoZone = photoZoneTemplate.querySelector('.grid-places__item').cloneNode(true);
+  const photoZone = photoZoneTemplate.querySelector('.grid-places__item').cloneNode(true);
 
-const like = photoZone.querySelector('.grid-places__like')
-like.addEventListener('click', function () {like.classList.toggle('grid-places__like_active')})
+  const like = photoZone.querySelector('.grid-places__like')
+  like.addEventListener('click', function () {like.classList.toggle('grid-places__like_active')})
 
-const deleteBtn = photoZone.querySelector('.grid-places__delete-icon')
-deleteBtn.addEventListener('click', function(evt) {
-  const parent = evt.target.parentElement
-  parent.remove()
+  const deleteBtn = photoZone.querySelector('.grid-places__delete-icon')
+  deleteBtn.addEventListener('click', function(evt) {
+    const parent = evt.target.parentElement
+    parent.remove()
 })
 
 photoZone.querySelector('.grid-places__image').addEventListener('click', showPhoto)
@@ -93,21 +93,17 @@ return photoZone
 }
 
 function showPhoto(evt) {
-const photo = evt.target.src
-const photoZone = photoPopup.querySelector('.popup__photo')
-photoZone.src = photo
+  const photo = evt.target.src
+  const photoZone = photoPopup.querySelector('.popup__photo')
+  photoZone.src = photo
 
-const closeBtn = document.querySelector('#close')
-closeBtn.addEventListener('click', function() {
-  closePopup(photoPopup)
-})
+  const closeBtn = document.querySelector('#close')
+  closeBtn.addEventListener('click', function() {
+    closePopup(photoPopup)
+  })
 
-openPopup(photoPopup)
+  openPopup(photoPopup)
 }
-
-function editProfile() {
-formName.value = currentFormName.textContent
-formProfession.value = currentFormProfession.textContent
 
 profileForm.addEventListener('submit', function(evt) {
   evt.preventDefault()
@@ -122,7 +118,11 @@ closeProfileBtn.addEventListener('click', function() {
   closePopup(profilePopup)
 })
 
-openPopup(profilePopup)
+function editProfile() {
+  formName.value = currentFormName.textContent
+  formProfession.value = currentFormProfession.textContent
+
+  openPopup(profilePopup)
 }
 
 function addPlace() {
