@@ -41,33 +41,43 @@ const currentFormProfession = document.querySelector('.profile__information')
 const profileForm = document.forms.profileForm
 const closeProfileBtn = document.querySelector('#profile-close')
 
-const addForm = document.forms.addPlace
-const closeBtn = addPlacePopup.querySelector('#photo-close')
+const addForm = document.forms.addPlaceForm
+const closeFormBtn = addPlacePopup.querySelector('#photo-close')
+
+const closePhotoBtn = document.querySelector('#close')
 
 addForm.addEventListener('submit', function(evt) {
-evt.preventDefault()
-
-const title = addPlacePopup.querySelector('#title').value
-const link = addPlacePopup.querySelector('#link').value
-
-const card = createCard(title, link)
-photos.prepend(card)
-closePopup(addPlacePopup)
-document.forms.addPlace.reset()
+  evt.preventDefault()
+  
+  const title = addPlacePopup.querySelector('#title').value
+  const link = addPlacePopup.querySelector('#link').value
+  
+  const card = createCard(title, link)
+  photos.prepend(card)
+  closePopup(addPlacePopup)
+  document.forms.addPlaceForm.reset()
 })
 
-closeBtn.addEventListener('click', function() {
-closePopup(addPlacePopup)
+closeFormBtn.addEventListener('click', function() {
+  closePopup(addPlacePopup)
+    
+  document.forms.addPlaceForm.reset()
+})
 
-document.forms.addPlace.reset()
+closePhotoBtn.addEventListener('click', function() {
+  closePopup(photoPopup)
+})
+
+closeProfileBtn.addEventListener('click', function() {
+  closePopup(profilePopup)
 })
 
 openProfileBtn.addEventListener('click', editProfile)
 openAddPhotoBtn.addEventListener('click', addPlace)
 
 initialCards.forEach(item => {
-const newCard = createCard(item.name, item.link)
-photos.append(newCard)
+  const newCard = createCard(item.name, item.link)
+  photos.append(newCard)
 })
 
 // function to add new card
@@ -81,26 +91,21 @@ function createCard(name, link) {
   deleteBtn.addEventListener('click', function(evt) {
     const parent = evt.target.parentElement
     parent.remove()
-})
+  })
 
-photoZone.querySelector('.grid-places__image').addEventListener('click', showPhoto)
+  photoZone.querySelector('.grid-places__image').addEventListener('click', showPhoto)
 
-photoZone.querySelector('.grid-places__image').src = link
-photoZone.querySelector('.grid-places__image').alt = name
-photoZone.querySelector('.grid-places__title').textContent = name
+  photoZone.querySelector('.grid-places__image').src = link
+  photoZone.querySelector('.grid-places__image').alt = name
+  photoZone.querySelector('.grid-places__title').textContent = name
 
-return photoZone
+  return photoZone
 }
 
 function showPhoto(evt) {
   const photo = evt.target.src
   const photoZone = photoPopup.querySelector('.popup__photo')
   photoZone.src = photo
-
-  const closeBtn = document.querySelector('#close')
-  closeBtn.addEventListener('click', function() {
-    closePopup(photoPopup)
-  })
 
   openPopup(photoPopup)
 }
@@ -114,10 +119,6 @@ profileForm.addEventListener('submit', function(evt) {
   closePopup(profilePopup)
 })
 
-closeProfileBtn.addEventListener('click', function() {
-  closePopup(profilePopup)
-})
-
 function editProfile() {
   formName.value = currentFormName.textContent
   formProfession.value = currentFormProfession.textContent
@@ -126,13 +127,13 @@ function editProfile() {
 }
 
 function addPlace() {
-openPopup(addPlacePopup)
+  openPopup(addPlacePopup)
 }
-
-function openPopup(popup) {
-popup.classList.add('popup_opened')
+  
+  function openPopup(popup) {
+  popup.classList.add('popup_opened')
 }
-
-function closePopup(popup) {
-popup.classList.remove('popup_opened')
+  
+  function closePopup(popup) {
+  popup.classList.remove('popup_opened')
 }
