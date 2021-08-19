@@ -42,7 +42,7 @@ const profileForm = document.forms.profileForm
 const closeProfileBtn = document.querySelector('#profile-close')
 
 const addForm = document.forms.addPlaceForm
-const closeFormBtn = addPlacePopup.querySelector('#photo-close')
+const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
 
 const closePhotoBtn = document.querySelector('#close')
 
@@ -58,7 +58,7 @@ addForm.addEventListener('submit', function(evt) {
   document.forms.addPlaceForm.reset()
 })
 
-closeFormBtn.addEventListener('click', function() {
+buttonClosePopupCard.addEventListener('click', function() {
   closePopup(addPlacePopup)
     
   document.forms.addPlaceForm.reset()
@@ -72,8 +72,8 @@ closeProfileBtn.addEventListener('click', function() {
   closePopup(profilePopup)
 })
 
-openProfileBtn.addEventListener('click', editProfile)
-openAddPhotoBtn.addEventListener('click', addPlace)
+openProfileBtn.addEventListener('click', openPopupProfile)
+openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
 
 initialCards.forEach(item => {
   const newCard = createCard(item.name, item.link)
@@ -119,14 +119,14 @@ profileForm.addEventListener('submit', function(evt) {
   closePopup(profilePopup)
 })
 
-function editProfile() {
+function openPopupProfile() {
   formName.value = currentFormName.textContent
   formProfession.value = currentFormProfession.textContent
 
   openPopup(profilePopup)
 }
 
-function addPlace() {
+function openPopupAddPlace() {
   openPopup(addPlacePopup)
 }
   
