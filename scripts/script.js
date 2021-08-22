@@ -122,6 +122,18 @@ profileForm.addEventListener('submit', function(evt) {
   closePopup(profilePopup)
 })
 
+const closeByOverlay = (evt) => {
+  if (evt.target.classList[0] === 'popup') {
+    closePopup(closeByOverlay.popup)
+  }
+}
+
+const closeByEsc = (evt) => {
+  if (evt.keyCode === 27) {
+    closePopup(closeByEsc.popup)
+  }
+}
+
 function openPopupProfile() {
   formName.value = currentFormName.textContent
   formProfession.value = currentFormProfession.textContent
@@ -133,10 +145,19 @@ function openPopupAddPlace() {
   openPopup(addPlacePopup)
 }
   
-  function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened')
+
+  closeByOverlay.popup = popup
+  closeByEsc.popup = popup
+
+  popup.addEventListener('click', closeByOverlay)
+  popup.addEventListener('keydown', closeByEsc)
 }
-  
-  function closePopup(popup) {
+
+function closePopup(popup) {
   popup.classList.remove('popup_opened')
+
+  popup.removeEventListener('click', closeByOverlay)
+  popup.removeEventListener('keydown', closeByEsc)
 }
