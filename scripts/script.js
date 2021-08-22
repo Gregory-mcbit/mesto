@@ -46,6 +46,9 @@ const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
 
 const closePhotoBtn = document.querySelector('#close')
 
+formName.value = currentFormName.textContent
+formProfession.value = currentFormProfession.textContent
+
 addForm.addEventListener('submit', function(evt) {
   evt.preventDefault()
   

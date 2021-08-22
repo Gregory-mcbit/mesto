@@ -41,9 +41,11 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="profileForm" novalidate>
-          <input minlength="2" maxlength="40" type="text" placeholder="Введите ваше имя" class="popup__input" id="name" required>
-          <input minlength="2" maxlength="200" type="text" placeholder="Введите вашу деятельность" class="popup__input" id="profession" required>
-          <input type="submit" class="popup__button-save" value="Сохранить" id="saveProfile">
+          <input name="name" minlength="2" maxlength="40" type="text" placeholder="Введите ваше имя" class="popup__input" id="name" required>
+          <span class="popup__input-error" id="name-input-error"></span>
+          <input name="info" minlength="2" maxlength="200" type="text" placeholder="Введите вашу деятельность" class="popup__input" id="profession" required>
+          <span class="popup__input-error" id="info-input-error"></span>
+          <button type="submit" class="popup__button-save" id="saveProfile">Сохранить</button>
         </form>
         <button type="button" class="popup__button-close" id="profile-close"></button>
       </div>
@@ -53,9 +55,11 @@
       <div class="popup__container">
         <h2 class="popup__title">Добавить место</h2>
         <form class="popup__form" name="addPlaceForm" novalidate>
-          <input minlength="2" maxlength="40" type="text" placeholder="Название" class="popup__input" id="title" required>
-          <input minlength="2" maxlength="200" type="text" placeholder="Ссылка на картинку" class="popup__input" id="link" required>
-          <input type="submit" class="popup__button-save" value="Создать" name="submit" id="photo-save">
+          <input minlength="2" name="place" maxlength="30" type="text" placeholder="Название" class="popup__input" id="title" required>
+          <span class="popup__input-error" id="place-input-error"></span>
+          <input type="url" name="url" placeholder="Ссылка на картинку" class="popup__input" id="link" required>
+          <span class="popup__input-error" id="url-input-error"></span>
+          <button type="submit" class="popup__button-save" name="submit" id="photo-save">Создать</button>
         </form>
         <button type="button" class="popup__button-close" id="photo-close"></button>
       </div>
@@ -80,5 +84,6 @@
     </template>
 
     <script src="scripts/script.js"></script>
+    <script src="scripts/validate.js"></script>
 </body>
 </html>
