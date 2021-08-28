@@ -1,31 +1,3 @@
-// initial adding
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const photoZoneTemplate = document.querySelector('#grid-template').content
 const photos = document.querySelector('.grid-places')
 const photoPopup = document.querySelector('#scale')
@@ -43,6 +15,7 @@ const closeProfileBtn = document.querySelector('#profile-close')
 
 const addForm = document.forms.addPlaceForm
 const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
+const buttonSaveCard = addPlacePopup.querySelector('#photo-save')
 
 const closePhotoBtn = document.querySelector('#close')
 
@@ -55,16 +28,16 @@ addForm.addEventListener('submit', function(evt) {
   const title = addPlacePopup.querySelector('#title').value
   const link = addPlacePopup.querySelector('#link').value
   
-  const card = createCard(title, link)
-  photos.prepend(card)
+  renderCard(title, link)
   closePopup(addPlacePopup)
-  document.forms.addPlaceForm.reset()
+  addForm.reset()
+
+  buttonSaveCard.setAttribute('disabled', true)
+  buttonSaveCard.classList.add('popup__button-save_inactive')
 })
 
 buttonClosePopupCard.addEventListener('click', function() {
   closePopup(addPlacePopup)
-    
-  document.forms.addPlaceForm.reset()
 })
 
 closePhotoBtn.addEventListener('click', function() {
@@ -79,8 +52,7 @@ openProfileBtn.addEventListener('click', openPopupProfile)
 openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
 
 initialCards.forEach(item => {
-  const newCard = createCard(item.name, item.link)
-  photos.append(newCard)
+  renderCard(item.name, item.link)
 })
 
 // function to add new card
@@ -109,6 +81,7 @@ function showPhoto(evt) {
   const photo = evt.target.src
   const photoZone = photoPopup.querySelector('.popup__photo')
   photoZone.src = photo
+  photoZone.alt = evt.target.alt
 
   openPopup(photoPopup)
 }
@@ -123,14 +96,14 @@ profileForm.addEventListener('submit', function(evt) {
 })
 
 const closeByOverlay = (evt) => {
-  if (evt.target.classList[0] === 'popup') {
-    closePopup(closeByOverlay.popup)
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target)
   }
 }
 
 const closeByEsc = (evt) => {
-  if (evt.keyCode === 27) {
-    closePopup(closeByEsc.popup)
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector('.popup_opened'))
   }
 }
 
@@ -148,16 +121,18 @@ function openPopupAddPlace() {
 function openPopup(popup) {
   popup.classList.add('popup_opened')
 
-  closeByOverlay.popup = popup
-  closeByEsc.popup = popup
-
   popup.addEventListener('click', closeByOverlay)
-  popup.addEventListener('keydown', closeByEsc)
+  document.addEventListener('keydown', closeByEsc)
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened')
 
   popup.removeEventListener('click', closeByOverlay)
-  popup.removeEventListener('keydown', closeByEsc)
+  document.removeEventListener('keydown', closeByEsc)
+}
+
+function renderCard(title, link) {
+  const card = createCard(title, link) 
+  photos.prepend(card)
 }
