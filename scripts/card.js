@@ -1,10 +1,11 @@
 export class Card {
-    constructor(title, link) {
+    constructor(title, link, template) {
         this._title = title
         this._link = link
+        this._template = template
     }
 
-    _setLike(){
+    _handleLike(){
         this._elem.querySelector('.grid-places__like').classList.toggle('grid-places__like_active')
     }
 
@@ -16,17 +17,12 @@ export class Card {
         openPopup(photoPopup)
     }
 
-    _setDelete(evt){
-        const parent = evt.target.parentElement
-        parent.remove()
+    _handleDelete(){
+        this._elem.remove()
     }
 
     _getTemplate() {
-        const cardElement = document
-        .querySelector('#grid-template')
-        .content
-        .querySelector('.grid-places__item')
-        .cloneNode(true)
+        const cardElement = this._template.cloneNode(true)
 
         return cardElement;
     }
@@ -42,8 +38,19 @@ export class Card {
         return this._elem
     }
 
+    _showPhoto() {
+        const photo = this._elem.querySelector('.grid-places__image').src
+        const photoZone = document.querySelector('#scale').querySelector('.popup__photo')
+        photoZone.src = photo
+        photoZone.alt = this._elem.querySelector('.grid-places__image').alt
+      
+        const popup = document.querySelector('#scale')
+        popup.classList.add('popup_opened')
+    }
+
     _setEvLs() {
-        this._elem.querySelector('.grid-places__delete-icon').addEventListener('click', (evt) => {this._setDelete(evt)})
-        this._elem.querySelector('.grid-places__like').addEventListener('click', () => {this._setLike()})
+        this._elem.querySelector('.grid-places__delete-icon').addEventListener('click', () => {this._handleDelete()})
+        this._elem.querySelector('.grid-places__like').addEventListener('click', () => {this._handleLike()})
+        this._elem.querySelector('.grid-places__image').addEventListener('click', () => {this._showPhoto()})
     }
 }

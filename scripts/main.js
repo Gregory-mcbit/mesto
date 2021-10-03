@@ -9,16 +9,18 @@ const openProfileBtn = document.querySelector('.profile__btn-image')
 const openAddPhotoBtn = document.querySelector('.profile__add-btn')
 const photoPopup = document.querySelector('#scale')
 
-const formName = document.querySelector('#name')
-const formProfession = document.querySelector('#profession')
-const currentFormName = document.querySelector('.profile__name')
-const currentFormProfession = document.querySelector('.profile__information')
+const nameInput = document.querySelector('#name')
+const professioInput = document.querySelector('#profession')
+const currentName = document.querySelector('.profile__name')
+const currentProfession = document.querySelector('.profile__information')
 const profileForm = document.forms.profileForm
 const closeProfileBtn = document.querySelector('#profile-close')
 
 const addForm = document.forms.addPlaceForm
 const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
-const buttonSaveCard = addPlacePopup.querySelector('#photo-save')
+const buttonSaveNameInput = profilePopup.querySelector('#saveProfile')
+
+const cardTemplate = document.querySelector('#grid-template').content.querySelector('.grid-places__item')
 
 const closePhotoBtn = document.querySelector('#close')
 closePhotoBtn.addEventListener('click', function() {
@@ -44,14 +46,14 @@ const data = {
     errorClass: 'popup__input-error_active'
 }
 
-formName.value = currentFormName.textContent
-formProfession.value = currentFormProfession.textContent
+const profileFormValidator = new FormValidator(data, profileForm)
+profileFormValidator.enableValidation()
 
-const form = new FormValidator(data, profileForm)
-form.enableValidation()
+const cardFormValidator = new FormValidator(data, addForm)
+cardFormValidator.enableValidation()
 
-const form2 = new FormValidator(data, addForm)
-form2.enableValidation()
+document.addEventListener('click', closeByOverlay)
+document.addEventListener('keydown', closeByEsc)
 
 openProfileBtn.addEventListener('click', openPopupProfile)
 openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
@@ -73,30 +75,28 @@ addForm.addEventListener('submit', function(evt) {
     createCard(title, link)
     closePopup(addPlacePopup)
     addForm.reset()
-  
-    buttonSaveCard.setAttribute('disabled', true)
-    buttonSaveCard.classList.add('popup__button-save_inactive')
 })
 
 profileForm.addEventListener('submit', function(evt) {
     evt.preventDefault()
   
-    currentFormName.textContent = formName.value
-    currentFormProfession.textContent = formProfession.value
+    currentName.textContent = nameInput.value
+    currentProfession.textContent = professioInput.value
   
     closePopup(profilePopup)
 })
 
 function openPopupProfile() {
-    formName.value = currentFormName.textContent
-    formProfession.value = currentFormProfession.textContent
+    nameInput.value = currentName.textContent
+    professioInput.value = currentProfession.textContent
+    profileFormValidator.toggleButtonState([nameInput, professioInput], buttonSaveNameInput)
   
     openPopup(profilePopup)
   }
   
-  function openPopupAddPlace() {
+function openPopupAddPlace() {
     openPopup(addPlacePopup)
-  }
+}
 
 
 
@@ -105,32 +105,16 @@ initialCards.forEach(element => {
 });
 
 function createCard(name, link) {
-    const card = new Card(name, link)
+    const card = new Card(name, link, cardTemplate)
     const cardElem = card.generateCard()
-    cardElem.querySelector('.grid-places__image').addEventListener('click', (evt) => {showPhoto(evt)})
 
     photos.prepend(cardElem)
 }
 
-function showPhoto(evt) {
-    const photo = evt.target.src
-    const photoZone = document.querySelector('#scale').querySelector('.popup__photo')
-    photoZone.src = photo
-    photoZone.alt = evt.target.alt
-  
-    openPopup(document.querySelector('#scale'))
-  }
-
 function openPopup(popup) {
     popup.classList.add('popup_opened')
-  
-    popup.addEventListener('click', closeByOverlay)
-    document.addEventListener('keydown', closeByEsc)
   }
   
 function closePopup(popup) {
     popup.classList.remove('popup_opened')
-  
-    popup.removeEventListener('click', closeByOverlay)
-    document.removeEventListener('keydown', closeByEsc)
   }
