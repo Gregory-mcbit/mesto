@@ -1,8 +1,13 @@
+import { openPopup } from "./utils.js"
+
+const photoZone = document.querySelector('#scale').querySelector('.popup__photo')
+const photoPopup = document.querySelector('#scale')
+
 export class Card {
-    constructor(title, link, template) {
+    constructor(title, link, templateSelector) {
         this._title = title
         this._link = link
-        this._template = template
+        this._template = document.querySelector(templateSelector).content
     }
 
     _handleLike(){
@@ -10,7 +15,6 @@ export class Card {
     }
 
     _scaleCard() {
-        const photoZone = photoPopup.querySelector('.popup__photo')
         photoZone.src = this._link
         photoZone.alt = this._title
 
@@ -22,7 +26,7 @@ export class Card {
     }
 
     _getTemplate() {
-        const cardElement = this._template.cloneNode(true)
+        const cardElement = this._template.querySelector('.grid-places__item').cloneNode(true)
 
         return cardElement;
     }
@@ -38,19 +42,9 @@ export class Card {
         return this._elem
     }
 
-    _showPhoto() {
-        const photo = this._elem.querySelector('.grid-places__image').src
-        const photoZone = document.querySelector('#scale').querySelector('.popup__photo')
-        photoZone.src = photo
-        photoZone.alt = this._elem.querySelector('.grid-places__image').alt
-      
-        const popup = document.querySelector('#scale')
-        popup.classList.add('popup_opened')
-    }
-
     _setEvLs() {
         this._elem.querySelector('.grid-places__delete-icon').addEventListener('click', () => {this._handleDelete()})
         this._elem.querySelector('.grid-places__like').addEventListener('click', () => {this._handleLike()})
-        this._elem.querySelector('.grid-places__image').addEventListener('click', () => {this._showPhoto()})
+        this._elem.querySelector('.grid-places__image').addEventListener('click', () => {this._scaleCard()})
     }
 }

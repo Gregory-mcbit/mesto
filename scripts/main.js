@@ -1,6 +1,7 @@
-import {Card} from './card.js'
-import {FormValidator} from './validate.js'
+import {Card} from './Card.js'
+import {FormValidator} from './Validate.js'
 import {initialCards} from './initial-cards.js'
+import {openPopup, closePopup} from './utils.js'
 
 const photos = document.querySelector('.grid-places')
 const addPlacePopup = document.querySelector('#photo')
@@ -18,24 +19,11 @@ const closeProfileBtn = document.querySelector('#profile-close')
 
 const addForm = document.forms.addPlaceForm
 const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
-const buttonSaveNameInput = profilePopup.querySelector('#saveProfile')
-
-const cardTemplate = document.querySelector('#grid-template').content.querySelector('.grid-places__item')
 
 const closePhotoBtn = document.querySelector('#close')
 closePhotoBtn.addEventListener('click', function() {
     closePopup(photoPopup)
   })
-const closeByOverlay = (evt) => {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(evt.target)
-    }
-  }
-const closeByEsc = (evt) => {
-    if (evt.key === "Escape") {
-      closePopup(document.querySelector('.popup_opened'))
-    }
-  }
 
 const data = {
     formSelector: '.popup__form',
@@ -51,9 +39,6 @@ profileFormValidator.enableValidation()
 
 const cardFormValidator = new FormValidator(data, addForm)
 cardFormValidator.enableValidation()
-
-document.addEventListener('click', closeByOverlay)
-document.addEventListener('keydown', closeByEsc)
 
 openProfileBtn.addEventListener('click', openPopupProfile)
 openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
@@ -89,12 +74,14 @@ profileForm.addEventListener('submit', function(evt) {
 function openPopupProfile() {
     nameInput.value = currentName.textContent
     professioInput.value = currentProfession.textContent
-    profileFormValidator.toggleButtonState([nameInput, professioInput], buttonSaveNameInput)
+    profileFormValidator.toggleButtonState()
   
     openPopup(profilePopup)
   }
   
 function openPopupAddPlace() {
+    cardFormValidator.toggleButtonState()
+
     openPopup(addPlacePopup)
 }
 
@@ -105,16 +92,8 @@ initialCards.forEach(element => {
 });
 
 function createCard(name, link) {
-    const card = new Card(name, link, cardTemplate)
+    const card = new Card(name, link, '#grid-template')
     const cardElem = card.generateCard()
 
     photos.prepend(cardElem)
 }
-
-function openPopup(popup) {
-    popup.classList.add('popup_opened')
-  }
-  
-function closePopup(popup) {
-    popup.classList.remove('popup_opened')
-  }
