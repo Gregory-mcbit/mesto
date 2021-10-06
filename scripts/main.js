@@ -10,6 +10,8 @@ const openProfileBtn = document.querySelector('.profile__btn-image')
 const openAddPhotoBtn = document.querySelector('.profile__add-btn')
 const photoPopup = document.querySelector('#scale')
 
+const templateSelector = '#grid-template'
+
 const nameInput = document.querySelector('#name')
 const professioInput = document.querySelector('#profession')
 const currentName = document.querySelector('.profile__name')
@@ -92,7 +94,7 @@ initialCards.forEach(element => {
 });
 
 function createCard(name, link) {
-    const card = new Card(name, link, '#grid-template')
+    const card = new Card(name, link, templateSelector)
     const cardElem = card.generateCard()
 
     photos.prepend(cardElem)
