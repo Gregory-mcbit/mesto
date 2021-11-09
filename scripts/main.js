@@ -1,14 +1,20 @@
-import {Card} from './Card.js'
-import {FormValidator} from './Validate.js'
 import {initialCards} from './initial-cards.js'
-import {openPopup, closePopup} from './utils.js'
+import {Card} from '../components/Card.js'
+import {FormValidator} from '../components/Validate.js'
+import Section from '../components/Section.js'
+import Popup from '../components/Popup.js'
+import PopupWithImage from '../components/PopupWithImage.js'
 
 const photos = document.querySelector('.grid-places')
-const addPlacePopup = document.querySelector('#photo')
-const profilePopup = document.querySelector('#profile')
+const photoTemplate = '.grid-places'
+const addPlacePopup = new Popup('#photo')
+const profilePopup = new Popup('#profile')
+addPlacePopup.setEventListeners()
+profilePopup.setEventListeners()
 const openProfileBtn = document.querySelector('.profile__btn-image')
 const openAddPhotoBtn = document.querySelector('.profile__add-btn')
-const photoPopup = document.querySelector('#scale')
+const photoPopup = new PopupWithImage('#scale')
+photoPopup.setEventListeners()
 
 const templateSelector = '#grid-template'
 
@@ -20,12 +26,7 @@ const profileForm = document.forms.profileForm
 const closeProfileBtn = document.querySelector('#profile-close')
 
 const addForm = document.forms.addPlaceForm
-const buttonClosePopupCard = addPlacePopup.querySelector('#photo-close')
-
-const closePhotoBtn = document.querySelector('#close')
-closePhotoBtn.addEventListener('click', function() {
-    closePopup(photoPopup)
-  })
+const buttonClosePopupCard = document.querySelector('#photo-close')
 
 const data = {
     formSelector: '.popup__form',
@@ -42,60 +43,66 @@ profileFormValidator.enableValidation()
 const cardFormValidator = new FormValidator(data, addForm)
 cardFormValidator.enableValidation()
 
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const elem = new Card(
+      item.name,
+      item.link,
+      templateSelector,
+      {
+        handleOpenImage: (name, link) => {photoPopup.open(name, link)}
+      })
+
+    const elemTotal = elem.generateCard()
+
+    cardsList.addItem(elemTotal)
+  }},
+  photoTemplate)
+
+cardsList.renderer()
+
 openProfileBtn.addEventListener('click', openPopupProfile)
 openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
 
-buttonClosePopupCard.addEventListener('click', function() {
-    closePopup(addPlacePopup)
-  })
-  
-closeProfileBtn.addEventListener('click', function() {
-    closePopup(profilePopup)
-  })
-
-addForm.addEventListener('submit', function(evt) {
-    evt.preventDefault()
-    
-    const title = addPlacePopup.querySelector('#title').value
-    const link = addPlacePopup.querySelector('#link').value
-    
-    createCard(title, link)
-    closePopup(addPlacePopup)
-    addForm.reset()
-})
-
-profileForm.addEventListener('submit', function(evt) {
-    evt.preventDefault()
-  
-    currentName.textContent = nameInput.value
-    currentProfession.textContent = professioInput.value
-  
-    closePopup(profilePopup)
-})
-
 function openPopupProfile() {
-    nameInput.value = currentName.textContent
-    professioInput.value = currentProfession.textContent
-    profileFormValidator.toggleButtonState()
-  
-    openPopup(profilePopup)
-  }
-  
+  nameInput.value = currentName.textContent
+  professioInput.value = currentProfession.textContent
+  profileFormValidator.toggleButtonState()
+
+  profilePopup.open()
+}
+
 function openPopupAddPlace() {
-    cardFormValidator.toggleButtonState()
+  cardFormValidator.toggleButtonState()
 
-    openPopup(addPlacePopup)
+  addPlacePopup.open()
 }
 
+function createCard() {
 
-
-initialCards.forEach(element => {
-    createCard(element.name, element.link)
-});
-
-function createCard(name, link) {
-    const card = new Card(name, link, templateSelector)
-    const cardElem = card.generateCard()
-
-    photos.prepend(cardElem)
 }
+
+// addForm.addEventListener('submit', function(evt) {
+//     evt.preventDefault()
+    
+//     const title = addPlacePopup.querySelector('#title').value
+//     const link = addPlacePopup.querySelector('#link').value
+    
+//     const card = new Card(title, link, templateSelector)
+//     const cardElem = card.generateCard()
+
+//     photos.prepend(cardElem)
+
+//     closePopup(addPlacePopup)
+//     addForm.reset()
+// })
+
+// profileForm.addEventListener('submit', function(evt) {
+//     evt.preventDefault()
+  
+//     currentName.textContent = nameInput.value
+//     currentProfession.textContent = professioInput.value
+  
+//     closePopup(profilePopup)
+// })
