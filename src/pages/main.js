@@ -5,6 +5,7 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import FormValidator from '../scripts/components/Validate.js'
+import './index.css'
 
 const openProfileBtn = document.querySelector('.profile__btn-image')
 const openAddPhotoBtn = document.querySelector('.profile__add-btn')
