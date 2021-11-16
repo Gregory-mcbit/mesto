@@ -6,6 +6,11 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import FormValidator from '../scripts/components/Validate.js'
 import './index.css'
+import addButton from '../images/Add\ Button.svg'
+import profileButton from '../images/Edit\ Button.svg'
+
+document.querySelector('.profile__add-btn').style.backgroundImage=`url(${addButton})`
+document.querySelector('.profile__btn-image').style.backgroundImage=`url(${profileButton})`
 
 const openProfileBtn = document.querySelector('.profile__btn-image')
 const openAddPhotoBtn = document.querySelector('.profile__add-btn')
@@ -106,25 +111,3 @@ function openPopupAddPlace() {
 
 openProfileBtn.addEventListener('click', openPopupProfile)
 openAddPhotoBtn.addEventListener('click', openPopupAddPlace)
-
-// addForm.addEventListener('submit', function(evt) {
-//     evt.preventDefault()
-    
-//     // const title = addPlacePopup.querySelector('#title').value
-//     // const link = addPlacePopup.querySelector('#link').value
-//     // console.log(addForm)
-
-//     createCard({name: title, link: link})
-//     addPlacePopup.close()
-// })
-
-// profileForm.addEventListener('submit', function(evt) {
-//     evt.preventDefault()
-
-//     // const {name, profession} = userInfo.getUserInfo()
-  
-//     currentName.textContent = name
-//     currentProfession.textContent = profession
-  
-//     profilePopup.close()
-// })

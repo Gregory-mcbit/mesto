@@ -1,7 +1,7 @@
 .profile__btn-image {
     width: 24px;
     height: 24px;
-    background-image: url(../../../images/Edit\ Button.svg);
+    /* background-image: url(../../../images/Edit\ Button.svg); */
     background-color: #000;
     outline: none;
     cursor: pointer;
