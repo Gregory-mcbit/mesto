@@ -1,16 +1,14 @@
 import Popup from "../components/Popup.js"
 
-const photoZone = document.querySelector('#scale').querySelector('.popup__photo')
-
 export default class PopupWithImage extends Popup {
-    constructor(templateSelector) {
+    constructor(templateSelector, photoZone) {
         super(templateSelector)
-        super.setEventListeners()
+        this._photoZone = photoZone
     }
 
     open(name, link) {
-        photoZone.alt = name
-        photoZone.src = link
+        this._photoZone.alt = name
+        this._photoZone.src = link
 
         super.open()
     }
