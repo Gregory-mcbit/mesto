@@ -15,8 +15,29 @@ document.querySelector('.profile__btn-image').style.backgroundImage=`url(${profi
 
 const userInfo = new UserInfo(profileSelectors)
 
-const addPlacePopup = new PopupWithForm('#photo', formCardSubmitHandler)
-const profilePopup = new PopupWithForm('#profile', formProfileSubmitHandler)
+const addPlacePopup= new PopupWithForm({
+  popupSelector: '#photo' ,
+  submitHandler: (data) =>{
+   const info = { 
+       name: data['place'], 
+       link: data['url'] 
+     } 
+  const card = createCard(info) 
+  cardList.addItem(card) 
+  addPlacePopup.close() 
+}})
+
+const profilePopup= new PopupWithForm({
+  popupSelector: '#profile' ,
+  submitHandler: (data) => { 
+     const info = { 
+        name: data['name'], 
+        profession: data['info'] 
+      } 
+     userInfo.setUserInfo(info) 
+     profilePopup.close() 
+
+}})
 
 const popupWithImage = new PopupWithImage(photoPopup, photoZone)
 
@@ -31,29 +52,6 @@ const createCard = (item) => {
       popupWithImage.open(name, link)
     }})
   return card.generateCard()
-}
-
-const formProfileSubmitHandler = (data) => {
-  const info = {
-    name: data['name'],
-    profession: data['info']
-  }
-
-  userInfo.setUserInfo(info)
-
-  profilePopup.close()
-}
-
-const formCardSubmitHandler = (data) => {
-  const info = {
-    name: data['place'],
-    link: data['url']
-  }
-
-  const card = createCard(info)
-  cardList.addItem(card)
-
-  addPlacePopup.close()
 }
 
 const cardList = new Section({
