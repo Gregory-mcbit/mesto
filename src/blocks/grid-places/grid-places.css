@@ -1,5 +1,4 @@
 .grid-places {
-    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 282px);
     row-gap: 20px;
@@ -9,17 +8,14 @@
     padding: 50px 0 0;
     justify-content: center;
     align-items: center;
-    list-style: none;
 }
-
 @media screen and (max-width: 896px) {
     .grid-places {
         grid-template-columns: repeat(2, 282px);
         padding-top: 36px;
     }
   }
-
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 576px) {
     .grid-places {
         grid-template-columns: repeat(1, 282px);
     }

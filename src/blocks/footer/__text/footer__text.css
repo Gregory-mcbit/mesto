@@ -2,17 +2,13 @@
     font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
+    font-size: 18px;
+    line-height: 22px;
     color: #545454;
-    margin: 0;
-    margin-bottom: 36px;
 }
-
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 890px) {
     .footer__text {
-        font-size: 18px;
-        line-height: 22px;
-        margin-bottom: 60px;
+        font-size: 14px;
+        line-height: 17px;
     }
 }

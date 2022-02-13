@@ -1,86 +1,118 @@
-<!DOCTYPE html>
+profile__edit-button<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>Место</title>
 </head>
-
-<body class="page">
-    <div class="page__container">
-        <header class="header">
-            <img src="<%=require('./images/Vector.svg')%>" class="header__logo" alt="Логотип">
-        </header>
-
-        <main>
-          <section class="profile">
-              <img class="profile__image" src="<%=require('./images/Avatar.jpg')%>" alt="Avatar">
-              <div class="profile__info">
-                    <div class="profile__wrap">
-                      <h1 class="profile__name">Григорий Егоров🎧</h1>
-                      <button type="button" class="profile__btn-image"></button>
-                    </div>
-                    <p class="profile__information">Программист, веб-разработчик 🤩🤩</p>
-              </div>
-                <button type="button" class="profile__add-btn"></button>
-          </section>
-
-            <section class="photos">
-              <ul class="grid-places"></ul>
-            </section>
-        </main>
-
-        <footer class="footer">
-          <p class="footer__text">&copy; 2021. McBit</p>
-        </footer>
-    </div>
-
-    <div class="popup" id="profile">
-      <div class="popup__container">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="profileForm" novalidate>
-          <input name="name" minlength="2" maxlength="40" type="text" placeholder="Введите ваше имя" class="popup__input" id="name" required>
-          <span class="popup__input-error" id="name-input-error"></span>
-          <input name="info" minlength="2" maxlength="200" type="text" placeholder="Введите вашу деятельность" class="popup__input" id="profession" required>
-          <span class="popup__input-error" id="info-input-error"></span>
-          <button type="submit" class="popup__button-save" id="saveProfile">Сохранить</button>
-        </form>
-        <button type="button" class="popup__button-close" id="profile-close"></button>
-      </div>
-    </div>
-
-    <div class="popup" id="photo">
-      <div class="popup__container">
-        <h2 class="popup__title">Добавить место</h2>
-        <form class="popup__form" name="addPlaceForm" novalidate>
-          <input minlength="2" name="place" maxlength="30" type="text" placeholder="Название" class="popup__input" id="title" required>
-          <span class="popup__input-error" id="place-input-error"></span>
-          <input type="url" name="url" placeholder="Ссылка на картинку" class="popup__input" id="link" required>
-          <span class="popup__input-error" id="url-input-error"></span>
-          <button type="submit" class="popup__button-save" name="submit" id="photo-save">Создать</button>
-        </form>
-        <button type="button" class="popup__button-close" id="photo-close"></button>
-      </div>
-    </div>
-
-    <div class="popup" id="scale">
-      <div class="popup__container-scale">
-        <button type="button" class="popup__button-close" id="close"></button>
-        <img class="popup__photo">
-      </div>
-    </div>
-
-    <template id="grid-template">
-      <li class="grid-places__item">
-        <img src="<%=require('./images/Trash.svg')%>" alt="Иконка удаления" class="grid-places__delete-icon">
-        <img class="grid-places__image">
-        <div class="grid-places__text">
-          <p class="grid-places__title"></p>
-          <button type="button" class="grid-places__like"></button>
+<!-- Page -->
+<body class="container">
+  <div class="page">
+<!-- Header -->
+    <header class="header">
+      <img class="header__logo" alt="Лого Место">
+    </header>
+<!-- Profile -->
+    <main class="content">
+      <section class="profile">
+        <div class="profile__container">
+          <div class="profile__avatar-wrapp">
+            <img alt="Аватар профиля" class="profile__avatar">
+            <img alt="Смена аватара" class="profile__avatar-edit">
+          </div>
+          <div class="profile__info">
+            <div class="profile__wrap">
+              <h1 class="profile__name">Григорий Егоров🎧</h1>
+              <button type="button" class="profile__edit-button"></button>
+            </div>
+            <p class="profile__information">Программист, веб-разработчик 🤩🤩</p>
+          </div>
         </div>
-      </li>
-    </template>
-    
-    <script type="module" src="pages/index.js"></script>
+        <button type="button" class="profile__add-button"></button>
+      </section>
+<!-- Photos -->
+      <section class="photos">
+        <ul class="grid-places"></ul>
+      </section>
+    </main>
+<!-- Footer -->
+    <footer class="footer">
+      <p class="footer__text">&copy; 2021. McBit</p>
+    </footer>
+  </div>
+  <!-- Попап редактирования -->
+  <div id="popup" class="popup popup_type_edit">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" name="edit-Profile" novalidate>
+        <input minlength="2" maxlength="40" type="text" placeholder="Введите ваше имя" class="popup__input popup__input_name_name" name="name" id="name-input" required>
+        <span class='popup__input-error' id='name-input-error'></span>
+        <input minlength="2" maxlength="200" type="text" placeholder="Введите вашу деятельность" class="popup__input popup__input_name_profession" name="profession" id="profession-input" required>
+        <span class='popup__input-error' id='profession-input-error'></span>
+        <input type="submit" class="popup__button-save" value="Сохранить" name="submit">
+      </form>
+      <button type="button" class="popup__button-close"></button>
+    </div>
+  </div>
+<!-- Попап добавления -->
+  <div id="popupAdd" class="popup popup_type_add">
+    <div class="popup__container">
+      <h2 class="popup__title">Добавить место</h2>
+      <form class="popup__form" name="add-Card" novalidate>
+        <input minlength="2" maxlength="30" type="text" placeholder="Название" class="popup__input popup__input_name_title-card" name="title-card" id="title-input" required>
+        <span class='popup__input-error' id='title-input-error'></span>
+        <input type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_name_link-card" name="link-card" id="link-input" required>
+        <span class='popup__input-error' id='link-input-error'></span>
+        <input type="submit" class="popup__button-save" value="Создать" name="submit" disabled>
+      </form>
+      <button type="button" class="popup__button-close"></button>
+    </div>
+  </div>
+<!-- Попап картинки -->
+<div class="popup popup_type_image">
+  <div class="popup__wrap">
+    <img class="popup__image">
+    <p class="popup__title-image"></p>
+    <button type="button" class="popup__button-close"></button>
+  </div>
+</div>
+<!-- Попап изменение аватара профиля -->
+<div class="popup popup_type_avatar">
+  <div class="popup__container">
+    <h4 class="popup__title">Обновить аватар</h4>
+    <form class="popup__form" name="editAvatar" novalidate>
+      <input type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_name_link-avatar" name="avatar-input" id="avatar-input" required>
+      <span class='popup__input-error' id='avatar-input-error'>Заполните это поле.</span>
+      <input type="submit" class="popup__button-save" value="Сохранить" name="submit">
+    </form>
+    <button type="button" class="popup__button-close"></button>
+  </div>
+</div>
+<!-- Попап подтверждения -->
+<div class="popup popup_type_confirm">
+  <div class="popup__container">
+    <h4 class="popup__title">Вы уверены?</h4>
+    <form class="popup__form" name="confirm" novalidate>
+      <input type="submit" class="popup__button-save" value="Да" name="submit">
+    </form>
+    <button type="button" class="popup__button-close"></button>
+  </div>
+</div>  
+<!-- Template -->
+<template id="grid-template">
+  <li class="grid-item">
+    <img src="./images/delete-icon.svg" alt="" class="grid-item__delete-icon">
+    <img class="grid-item__photo">
+    <div class="grid-item__wrap">
+      <h3 class="grid-item__name"></h3>
+      <div class="grid-item__like-container">
+        <button type="button" class="grid-item__like"></button>
+        <p class="grid-item__like-counter">1</p>
+      </div>
+    </div>
+  </li>
+</template>
+
 </body>
 </html>

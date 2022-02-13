@@ -11,11 +11,9 @@
     padding-bottom: 13px;
     margin-top: 30px;
 }
-
 .popup__input:first-of-type {
     margin: 54px 0 0;
 }
-
 @media screen and (max-width: 400px) {
     .popup__input:first-of-type {
         margin-top: 75px;
