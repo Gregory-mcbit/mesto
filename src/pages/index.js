@@ -78,18 +78,22 @@ popupEditOpenButton.addEventListener('click', function() {
   professionInput.value = currentInfo.profession;
 });
 
-// Обработчик формы / автоматическое заполнение формы
-const formEditSubmitHandler = (data) => {
+// Обработчик формы
+const editFormHandler = (data) => {
   const info = {
     name: data['name'],
     profession: data['profession']
   }
-  popupEditProfile.waitSubmitButton('Сохранение...')
+
   api.editUserInfo(info.name, info.profession)
     .then(() => {
+      popupEditProfile.waitSubmitButton('Сохранение...')
       userInfo.setUserInfo(info);
-      popupEditProfile.close();
-    }).catch(error => this.errorHandler(error))
+    })
+    .catch(error => this.errorHandler(error))
+    .finally(() => {
+      popupEditProfile.close()
+      popupEditProfile.resetWaitSubmitButton()})
 }
 
 // Открытие попапа добавления карточки
@@ -99,15 +103,16 @@ popupAddOpenButton.addEventListener('click', function() {
 })
 
 // Обработчик добавления карточки
-const formAddSubmitHandler = () => {
-  const titleCard = titleCardInput.value;
-  const linkCard = linkCardInput.value;
+const submitAddFormHandler = ({"title-card": title, "link-card": link}) => {
+  const titleCard = title;
+  const linkCard = link;
   api.addCard(titleCard, linkCard)
-    .then(dataCard=> {
+    .then(dataCard => {
       const card = createCard(dataCard);
-    cardsList.prependItem(card);
-    popupAddCard.close();
-  }).catch(error => this.errorHandler(error));
+      cardsList.prependItem(card);
+  })
+  .catch(error => this.errorHandler(error))
+  .finally(() => {popupAddCard.close()})
 }
 
 // Открытие попапа изменение аватара
@@ -117,34 +122,38 @@ popupAvatarButton.addEventListener('click', function() {
 });
 
 // Обработчик формы подтверждения удаления
-const formDeleteSubmitHandler = (event, card) => {
+const deleteSubmitHandler = (event, card) => {
   event.preventDefault();
 
-  popupConfirm.waitSubmitButton('Удаление...');
   api.deleteCard(card.getIdCard())
     .then(response => {
+      popupConfirm.waitSubmitButton('Удаление...');
       card.deleteCard();
-    }).then(() => {
+    })
+    .catch(error => this.errorHandler(error))
+    .finally(() => {
       popupConfirm.close();
-      popupConfirm.resetWaitSubmitButton();
-    }).catch(error => this.errorHandler(error))  
+      popupConfirm.resetWaitSubmitButton();}) 
 } 
 
-// Обработчик попапа изменение аватара
-const formEditAvatarSubmitHandler = (event) => {
-  event.preventDefault();
-  avatarImage.src = popupAvatarInput.value;
-  popupEditAvatar.waitSubmitButton('Сохранение...');
-  api.editUserAvatar(popupAvatarInput.value)
+// Обработчик попапа изменения аватара
+const editAvatar = ({"avatar-input": avatar}) => {
+  api.editUserAvatar(avatar)
     .then(() => {
-      popupEditAvatar.close();
-      popupAvatarForm.reset();
-    }).catch(error => this.errorHandler(error));
+      userInfo.setUserAvatar(avatar)
+      popupEditAvatar.waitSubmitButton('Сохранение...')
+    })
+    .catch(error => this.errorHandler(error))
+    .finally(() => {
+      popupEditAvatar.close()
+      popupAvatarForm.reset()
+    })
 }
 
 let cardsList;
 
 function createCard(item) {
+  // console.log(item)
   const card = new Card (item, userId, gridCardTemplateId, 
     {
       handleCardClick: (name, link) => {
@@ -181,7 +190,6 @@ const generateInitialCards = (cards) => {
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
-    console.log(userData)
     generateInitialCards(cards)
     const userName = userData.name;
     const userProfession = userData.about;
@@ -201,8 +209,8 @@ const avatarFormValidator = new FormValidator(settingsForm, popupAvatarForm);
 avatarFormValidator.enableValidation();
 
 // Попап редактирования аватара
-const popupEditAvatar = new PopupWithSubmit(profileSelectors.profileAvatarSelector, popupAvatarCloseButton,
-  formEditAvatarSubmitHandler);
+const popupEditAvatar = new PopupWithForm(profileSelectors.profileAvatarSelector, popupAvatarCloseButton,
+  editAvatar);
 popupEditAvatar.setEventListeners();
 
 // Включаем валидацию формы добавления карточки
@@ -215,18 +223,18 @@ popupWithImage.setEventListeners();
 
 // Попап редактирования профиля
 const popupEditProfile = new PopupWithForm(popupEditSelector, popupEditCloseButtonSelector,
-  formEditSubmitHandler)
+  editFormHandler)
 popupEditProfile.setEventListeners();
 
 // Попап добавления карточки
 const popupAddCard = new PopupWithForm(popupAddSelector, popupAddCloseButtonSelector,
-  formAddSubmitHandler)
+  submitAddFormHandler)
 popupAddCard.setEventListeners();
 
 // Попап подтвеждения удаления
 const popupConfirm = new PopupWithSubmit(popupConfirmSelector, popupAddCloseButtonSelector,
   (evt, card) => {
-    formDeleteSubmitHandler(evt, card)
+    deleteSubmitHandler(evt, card)
   }
 )
 popupConfirm.setEventListeners();

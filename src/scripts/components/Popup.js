@@ -22,13 +22,13 @@ class Popup {
   open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handlerEscClose);
-    document.addEventListener('click', this._handlerClickOverlay);
+    this._popup.addEventListener('click', this._handlerClickOverlay);
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handlerEscClose);
-    document.removeEventListener('click', this._handlerClickOverlay);
+    this._popup.removeEventListener('click', this._handlerClickOverlay);
   }
 
   setEventListeners() {

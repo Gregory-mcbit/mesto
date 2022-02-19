@@ -20,8 +20,7 @@ export default class UserInfo {
       if(avatar) {
         this._avatar = avatar
         this._userAvatar.src = avatar;
-      }
-    }
+      }}
   
     setUserInfo({name, profession}) {
       if(name) {

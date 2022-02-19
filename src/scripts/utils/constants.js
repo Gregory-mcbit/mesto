@@ -16,7 +16,7 @@ const profileSelectors = {
     profileAvatarSelector: '.popup_type_avatar',
     profileUserAvatarSelector: '.profile__avatar'
   }
-const userId = '6ff5ad92-09a5-4704-b348-99b5b96bf27b'
+const userId = "d76dbc61d64cfa22a69d8075"
 const popupEditOpenButton = document.querySelector('.profile__edit-button');
 const nameInput = popupEditWrap.querySelector('.popup__input_name_name');
 const professionInput = popupEditWrap.querySelector('.popup__input_name_profession');

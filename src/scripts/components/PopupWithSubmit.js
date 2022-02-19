@@ -26,7 +26,7 @@ class PopupWithSubmit extends Popup {
       this.close();
     })
   }
-
+  
   open(setting) {
     this._setting = setting;
     super.open();
