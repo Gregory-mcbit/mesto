@@ -89,11 +89,10 @@ const editFormHandler = (data) => {
     .then(() => {
       popupEditProfile.waitSubmitButton('Сохранение...')
       userInfo.setUserInfo(info);
+      popupEditProfile.close()
     })
     .catch(error => this.errorHandler(error))
-    .finally(() => {
-      popupEditProfile.close()
-      popupEditProfile.resetWaitSubmitButton()})
+    .finally(() => {popupEditProfile.resetWaitSubmitButton()})
 }
 
 // Открытие попапа добавления карточки
@@ -110,15 +109,15 @@ const submitAddFormHandler = ({"title-card": title, "link-card": link}) => {
     .then(dataCard => {
       const card = createCard(dataCard);
       cardsList.prependItem(card);
+      popupAddCard.close()
   })
   .catch(error => this.errorHandler(error))
-  .finally(() => {popupAddCard.close()})
 }
 
 // Открытие попапа изменение аватара
 popupAvatarButton.addEventListener('click', function() {
-  popupEditAvatar.open();
-  popupEditAvatar.resetWaitSubmitButton();
+  popupEditAvatar.resetWaitSubmitButton()
+  popupEditAvatar.open()
 });
 
 // Обработчик формы подтверждения удаления
@@ -129,24 +128,25 @@ const deleteSubmitHandler = (event, card) => {
     .then(response => {
       popupConfirm.waitSubmitButton('Удаление...');
       card.deleteCard();
+      popupConfirm.close();
     })
     .catch(error => this.errorHandler(error))
-    .finally(() => {
-      popupConfirm.close();
-      popupConfirm.resetWaitSubmitButton();}) 
+    .finally(() => {popupConfirm.resetWaitSubmitButton()})
 } 
 
 // Обработчик попапа изменения аватара
 const editAvatar = ({"avatar-input": avatar}) => {
+
   api.editUserAvatar(avatar)
     .then(() => {
-      userInfo.setUserAvatar(avatar)
       popupEditAvatar.waitSubmitButton('Сохранение...')
+      userInfo.setUserAvatar(avatar)
+      popupEditAvatar.close()
     })
     .catch(error => this.errorHandler(error))
     .finally(() => {
-      popupEditAvatar.close()
       popupAvatarForm.reset()
+      popupEditAvatar.resetWaitSubmitButton()
     })
 }
 
