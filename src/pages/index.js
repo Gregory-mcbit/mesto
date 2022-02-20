@@ -92,7 +92,7 @@ const editFormHandler = (data) => {
       popupEditProfile.close()
     })
     .catch(error => this.errorHandler(error))
-    .finally(() => {popupEditProfile.resetWaitSubmitButton()})
+    .finally(() => {popupEditProfile.resetWaitSubmitButton()})  // пытался сделать так, чтобы было видно текст сохранения, но не получается
 }
 
 // Открытие попапа добавления карточки
