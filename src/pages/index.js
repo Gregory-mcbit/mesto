@@ -85,14 +85,15 @@ const editFormHandler = (data) => {
     profession: data['profession']
   }
 
+  popupEditProfile.waitSubmitButton('Сохранение...')
+
   api.editUserInfo(info.name, info.profession)
     .then(() => {
-      popupEditProfile.waitSubmitButton('Сохранение...')
       userInfo.setUserInfo(info);
       popupEditProfile.close()
     })
     .catch(error => this.errorHandler(error))
-    .finally(() => {popupEditProfile.resetWaitSubmitButton()})  // пытался сделать так, чтобы было видно текст сохранения, но не получается
+    .finally(() => {popupEditProfile.resetWaitSubmitButton()})
 }
 
 // Открытие попапа добавления карточки
@@ -124,9 +125,10 @@ popupAvatarButton.addEventListener('click', function() {
 const deleteSubmitHandler = (event, card) => {
   event.preventDefault();
 
+  popupConfirm.waitSubmitButton('Удаление...')
+
   api.deleteCard(card.getIdCard())
     .then(response => {
-      popupConfirm.waitSubmitButton('Удаление...');
       card.deleteCard();
       popupConfirm.close();
     })
@@ -137,9 +139,10 @@ const deleteSubmitHandler = (event, card) => {
 // Обработчик попапа изменения аватара
 const editAvatar = ({"avatar-input": avatar}) => {
 
+  popupEditAvatar.waitSubmitButton('Сохранение...')
+
   api.editUserAvatar(avatar)
     .then(() => {
-      popupEditAvatar.waitSubmitButton('Сохранение...')
       userInfo.setUserAvatar(avatar)
       popupEditAvatar.close()
     })
